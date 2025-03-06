@@ -32,7 +32,7 @@ jobs:
           path: playwright-report/
           retention-days: 30
       - name: Deploy to production
-        uses: johnbeynon/render-deploy-action@v0.0.8
+        uses: johnbeynon/render-deploy-action@747373cdb7b9b3f561438e063ee0815b71584f1b
         with:
           service-id: ${{ secrets.SERVICE_ID }}
           api-key: ${{ secrets.API_KEY }}
