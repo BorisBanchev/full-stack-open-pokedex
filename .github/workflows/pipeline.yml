@@ -57,17 +57,18 @@ jobs:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
     steps:
       - name: Notify success
-        uses: rjstone/discord-webhook-notify@v1
-        if: success()
+        if: ${{ needs.simple_deployment_pipeline.result == 'success' }}
+        uses: Ilshidur/action-discord@v2
         with:
-          severity: info
-          username: GitHub
-          details: A new version of Pokedex deployed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: 'A new version of Pokedex deployed!'
       - name: Notify failure
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        if: failure()
+        if: ${{ needs.simple_deployment_pipeline.result == 'failure' }}
+        uses: Ilshidur/action-discord@v2
         with:
-          severity: error
-          details: Build failed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            Deployment failed!
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+            Message: ${{ github.event.head_commit.message }}
