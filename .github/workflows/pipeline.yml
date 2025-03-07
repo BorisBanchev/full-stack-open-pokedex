@@ -36,4 +36,5 @@ jobs:
           path: playwright-report/
           retention-days: 30
       - name: Deploy to Render
+        if: ${{ github.event_name == 'push' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.SERVICE_ID }}?key=${{ secrets.API_KEY }}
