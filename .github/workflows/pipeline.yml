@@ -57,18 +57,14 @@ jobs:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
     steps:
       - name: Notify success
+        uses: sarisia/actions-status-discord@v1
         if: ${{ needs.simple_deployment_pipeline.result == 'success' }}
-        uses: Ilshidur/action-discord@v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: 'A new version of Pokedex deployed!'
+          description: 'Build succeeded!'
       - name: Notify failure
+        uses: sarisia/actions-status-discord@v1
         if: ${{ needs.simple_deployment_pipeline.result == 'failure' }}
-        uses: Ilshidur/action-discord@v2
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
-            Deployment failed!
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
-            Message: ${{ github.event.head_commit.message }}
+          description: 'Build failed!'
