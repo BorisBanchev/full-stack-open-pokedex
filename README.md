@@ -3,7 +3,7 @@
 This repository is used for the CI/CD module of the Full stack open course.
 
 Fork the repository to complete course exercises
-
+Exercise 11.20 can be found [here](https://github.com/BorisBanchev/FullStack-open-phonebook-CI-CD)
 ## Commands
 
 Start by running `npm install` inside the project folder
